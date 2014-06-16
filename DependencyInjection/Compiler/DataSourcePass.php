@@ -11,6 +11,7 @@ namespace FSi\Bundle\DataSourceBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\Reference;
 
 class DataSourcePass implements CompilerPassInterface
 {
@@ -92,5 +93,17 @@ class DataSourcePass implements CompilerPassInterface
 
             $container->getDefinition($driverExtension)->replaceArgument(4, $subscribers);
         }
+//
+//        if ($container->has('datasource.driver.elastica.subscriber.result_indexer')) {
+//            $resultIndexerDef = $container->findDefinition('datasource.driver.elastica.subscriber.result_indexer');
+//            $transformers = array();
+//            $services = $container->findTaggedServiceIds('fos_elastica.elastica_to_model_transformer');
+//            foreach ($services as $serviceId => $tag) {
+//                //var_dump($serviceId, $tag);
+//                $transformers[$tag[0]['index']][$tag[0]['type']][] = new Reference($serviceId);
+//            }
+//
+//            $resultIndexerDef->replaceArgument(0, $transformers);
+//        }
     }
 }

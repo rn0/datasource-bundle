@@ -10,6 +10,12 @@
             "email": "lukasz@fsi.pl"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "/home/piotr/projects/datasource-es-driver"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "twig/twig": "~1.2",
@@ -22,7 +28,9 @@
     "require-dev": {
         "symfony/form" : "~2.2",
         "symfony/twig-bridge" : "~2.2",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "3.7.*",
+        "friendsofsymfony/elastica-bundle": "3.0.*@dev",
+        "fsi/datasource-elastica-driver": "dev-es"
     },
     "autoload": {
         "psr-0": { "FSi\\Bundle\\DataSourceBundle\\": "" }

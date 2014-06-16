@@ -9,6 +9,7 @@
 
 namespace FSi\Bundle\DataSourceBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -28,7 +29,7 @@ class FSIDataSourceExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('datasource.xml');
 
-        $this->registerDrivers($loader);
+        $this->registerDrivers($loader, $container);
 
         if (isset($config['yaml_configuration']) && $config['yaml_configuration']) {
             $loader->load('datasource_yaml_configuration.xml');
@@ -48,13 +49,18 @@ class FSIDataSourceExtension extends Extension
     /**
      * @param $loader
      */
-    private function registerDrivers($loader)
+    private function registerDrivers($loader, ContainerBuilder $container)
     {
         $loader->load('driver/collection.xml');
         /* doctrine driver is deprecated since version 1.4 */
         $loader->load('driver/doctrine.xml');
+
         if (class_exists('FSi\Component\DataSource\Driver\Doctrine\ORM\DoctrineDriver')) {
             $loader->load('driver/doctrine-orm.xml');
+        }
+
+        if (class_exists('FSi\Component\DataSource\Driver\Elastica\ElasticaDriver')) {
+            $loader->load('driver/elastica.xml');
         }
     }
 }
